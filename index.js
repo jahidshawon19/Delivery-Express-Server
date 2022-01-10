@@ -29,7 +29,7 @@ async function run() {
         const bookingCollection = database.collection('booking')
         
 
-        // add services api 
+        // POST API FOR ADDING BOOKING
         app.post('/bookings', async (req, res )=>{
             const bookingData = req.body 
             const result = await bookingCollection.insertOne(bookingData)
