@@ -29,12 +29,24 @@ async function run() {
         const bookingCollection = database.collection('booking')
         
 
+
         // POST API FOR ADDING BOOKING
         app.post('/bookings', async (req, res )=>{
             const bookingData = req.body 
             const result = await bookingCollection.insertOne(bookingData)
             res.json(result)
         })
+
+        //GET API FOR FETCH BOOKING DATA FOR SPECIFIC USER BASED ON EMAIL 
+        app.get('/bookings', async (req, res) =>{
+            const email= req.query.email 
+            const query = {senderEmail:email}
+           
+            const cursor = bookingCollection.find(query)
+            const bookings = await cursor.toArray()
+            res.json(bookings)
+        })
+
 
     } finally {
         // await client.close()
