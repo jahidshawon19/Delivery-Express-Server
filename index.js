@@ -27,6 +27,7 @@ async function run() {
         await client.connect()
         const database = client.db('delivery_express')
         const bookingCollection = database.collection('booking')
+        const userCollection = database.collection('users')
         
 
 
@@ -45,6 +46,21 @@ async function run() {
             const cursor = bookingCollection.find(query)
             const bookings = await cursor.toArray()
             res.json(bookings)
+        })
+
+
+        // POST API TO ADD USER TO THE DATABASE
+        app.post('/users', async (req, res) =>{
+            const userData = req.body 
+            const result = await userCollection.insertOne(userData)
+            res.json(result)
+        })
+
+        //GET API FOR FETCH USERS FROM DATABASE 
+        app.get('/users', async (req, res) =>{
+            const cursor = userCollection.find({})
+            const allUsers = await cursor.toArray()
+            res.json(allUsers)
         })
 
 
