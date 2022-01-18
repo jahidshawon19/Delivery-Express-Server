@@ -49,6 +49,21 @@ async function run() {
             res.json(bookings)
         })
 
+        //GET API FOR FETCH ALL BOOKINGS TO DISPLAY IN ADMIN PANEL 
+
+        app.get('/allbookings', async (req, res)=>{
+            cursor = bookingCollection.find({})
+            const allBookings = await cursor.toArray()
+            res.send(allBookings)
+        })
+
+        app.get('/allbookings/:id', async(req,res)=>{
+            const id = req.params.id
+            const query = {_id:ObjectId(id)}
+            const booking = await bookingCollection.findOne(query)
+            res.send(booking)
+        })
+
 
         // POST API TO ADD USER TO THE DATABASE
         app.post('/users', async (req, res) =>{
